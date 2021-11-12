@@ -1,39 +1,37 @@
-package hello.advanced.trace.hellotrace;
-
-import java.util.Optional;
-
-import org.springframework.stereotype.Component;
+package hello.advanced.trace.logtrace;
 
 import hello.advanced.trace.TraceId;
 import hello.advanced.trace.TraceStatus;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
-public class HelloTraceV2 {
+public class FieldLogTrace implements LogTrace{
 
 	private static final String START_PREFIX = "-->";
 	private static final String COMPLETE_PREFIX = "<--";
 	private static final String EX_PREFIX = "<X-";
 	
+	private TraceId traceIdHolder;//traceId 동기화(동시 발생 오류)
+	
 	//로그 시작
 	public TraceStatus begin(String message) {
-		TraceId traceId = new TraceId();
+		syncTraceId();
+		
+		TraceId traceId = traceIdHolder;
 		long startTimeMs = System.currentTimeMillis();
 		
 		// 로그 출력
 		log.info("[{}] {} {}",traceId.getId(),addSpace(START_PREFIX, traceId.getLevel()),message);
 		return new TraceStatus(traceId, startTimeMs, message);
 	};
-	//V2추가
-	public TraceStatus beginSync(TraceId beforeTraceId,String message) {
-		TraceId nextId = beforeTraceId.createNextId();
-		long startTimeMs = System.currentTimeMillis();
-		
-		// 로그 출력
-		log.info("[{}] {} {}",nextId.getId(),addSpace(START_PREFIX, nextId.getLevel()),message);
-		return new TraceStatus(nextId, startTimeMs, message);
-	};
+	
+	private void syncTraceId() {
+		if(traceIdHolder == null) {
+			traceIdHolder = new TraceId();
+		}else {
+			traceIdHolder = traceIdHolder.createNextId();
+		}
+	}
 	
 	//로그 정상 종료 (실행 시간 계산)
 	public void end(TraceStatus status) {
@@ -57,8 +55,17 @@ public class HelloTraceV2 {
 			log.info("[{}] {} {} time={}ms ex={}",traceId.getId(),addSpace(EX_PREFIX,traceId.getLevel()),status.getMessage(),resultTimeMs,e.toString());
 		}
 		
+		releacseTraceId();
+		
 	}
 	
+	private void releacseTraceId() {
+		if(traceIdHolder.isFirstLevel()) {
+			traceIdHolder = null;
+		}else {
+			traceIdHolder = traceIdHolder.createPreviousId();
+		}
+	}
 	private static String addSpace(String prefix, int level) {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0;i < level;i++) {
@@ -66,4 +73,5 @@ public class HelloTraceV2 {
 		}
 		return sb.toString();
 	}
+
 }
