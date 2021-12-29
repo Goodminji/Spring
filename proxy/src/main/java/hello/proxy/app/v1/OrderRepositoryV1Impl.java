@@ -3,9 +3,9 @@ package hello.proxy.app.v1;
 public class OrderRepositoryV1Impl implements OrderRepositoryV1 {
     @Override
     public void save(String itemId) {
-        //ì €ì¥ ë¡œì§
+        //ÀúÀå·ÎÁ÷
         if (itemId.equals("ex")) {
-            throw new IllegalStateException("ì˜ˆì™¸ ë°œìƒ!");
+            throw new IllegalStateException("¿¹¿Ü¹ß»ı!");
         }
         sleep(1000);
     }

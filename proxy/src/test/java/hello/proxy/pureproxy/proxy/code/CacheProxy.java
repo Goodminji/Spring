@@ -2,22 +2,27 @@ package hello.proxy.pureproxy.proxy.code;
 
 import lombok.extern.slf4j.Slf4j;
 
+//«¡∑œΩ√ ª˝º∫
 @Slf4j
-public class CacheProxy implements Subject {
+public class CacheProxy implements Subject{
+	
+	//Ω«¡¶ ∞¥√º
+	private Subject target;
+	private String cacheValue;
 
-    private Subject target;
-    private String cacheValue;
+	public CacheProxy(Subject target) {
+		this.target = target;
+	}
+	
+	@Override
+	public String operation() {
+	
+		log.info("«¡∑œΩ√»£√‚");
+		
+		if(cacheValue == null) {
+			cacheValue = target.operation();
+		}
+		return cacheValue;
+	}
 
-    public CacheProxy(Subject target) {
-        this.target = target;
-    }
-
-    @Override
-    public String operation() {
-        log.info("ÌîÑÎ°ùÏãú Ìò∏Ï∂ú");
-        if (cacheValue == null) {
-            cacheValue = target.operation();
-        }
-        return cacheValue;
-    }
 }

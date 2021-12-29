@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@RequestMapping//ìŠ¤í”„ë§ì€ @Controller ë˜ëŠ” @RequestMapping ì´ ìˆì–´ì•¼ ìŠ¤í”„ë§ ì»¨íŠ¸ë¡¤ëŸ¬ë¡œ ì¸ì‹
+@RequestMapping//½ºÇÁ¸µÀº @controller ¶Ç´Â @requestMappingÀÌ ÀÖ¾î¾ß ½ºÇÁ¸µ ÄÁÆ®·Ñ·¯·Î ÀÎ½Ä
 @ResponseBody
 public interface OrderControllerV1 {
 
