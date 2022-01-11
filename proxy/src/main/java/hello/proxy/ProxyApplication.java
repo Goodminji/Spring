@@ -5,15 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
-import hello.proxy.config.AppV1Config;
-import hello.proxy.config.AppV2Config;
+import hello.proxy.config.v1_proxy.InterfaceProxyConfig;
 import hello.proxy.trace.logtrace.LogTrace;
 import hello.proxy.trace.logtrace.ThreadLocalLogTrace;
 
 //@Import(AppV1Config.class)//스프링 빈으로 등록하기
 //@Import(AppV2Config.class)//스프링 빈으로 등록하기
-@Import({AppV1Config.class, AppV2Config.class})
-//@Import(InterfaceProxyConfig.class)
+//@Import({AppV1Config.class, AppV2Config.class})
+@Import(InterfaceProxyConfig.class)
 //@Import(ConcreteProxyConfig.class)
 //@Import(DynamicProxyBasicConfig.class)
 //@Import(DynamicProxyFilterConfig.class)
