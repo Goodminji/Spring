@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
-import hello.proxy.config.v1_proxy.ConcreteProxyConfig;
+import hello.proxy.config.v2_dynamicProxy.DynamicProxyFilterConfig;
 import hello.proxy.trace.logtrace.LogTrace;
 import hello.proxy.trace.logtrace.ThreadLocalLogTrace;
 
@@ -13,9 +13,9 @@ import hello.proxy.trace.logtrace.ThreadLocalLogTrace;
 //@Import(AppV2Config.class)//스프링 빈으로 등록하기
 //@Import({AppV1Config.class, AppV2Config.class})
 //@Import(InterfaceProxyConfig.class)
-@Import(ConcreteProxyConfig.class)
+//@Import(ConcreteProxyConfig.class)
 //@Import(DynamicProxyBasicConfig.class)
-//@Import(DynamicProxyFilterConfig.class)
+@Import(DynamicProxyFilterConfig.class)
 //@Import(ProxyFactoryConfigV1.class)
 //@Import(ProxyFactoryConfigV2.class)
 //@Import(BeanPostProcessorConfig.class)
